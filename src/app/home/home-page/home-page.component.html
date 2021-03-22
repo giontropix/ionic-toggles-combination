@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<ion-item lines="full">
+  <ion-toggle color="primary" (click)="this.isOn = !this.isOn"></ion-toggle
+  ><ion-label>Switch ALL OFF</ion-label>
+</ion-item>
+
+<ion-grid>
+  <ion-list>
+    <ion-row class="ion-align-items-center" *ngFor="let item of items">
+      <ion-item>
+        <app-item
+          [haveToSwitchBecauseFlyMode]="this.haveToSwitchBecauseFlyMode"
+          [dataValue]="item"
+          [isOn]="this.isOn"
+          (emit)="switchAll($event)"
+        ></app-item>
+      </ion-item>
+    </ion-row>
+  </ion-list>
+</ion-grid>
