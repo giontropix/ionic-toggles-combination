@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 
 <ion-item lines="full">
-  <ion-toggle color="primary" (click)="this.isOn = !this.isOn"></ion-toggle
-  ><ion-label>Switch ALL OFF</ion-label>
+  <ion-toggle color="primary" [disabled]="this.haveToSwitchBecauseFlyMode" (click)="this.isOn = !this.isOn"></ion-toggle
+  ><ion-label>Switch ALL</ion-label>
 </ion-item>
 
 <ion-grid>

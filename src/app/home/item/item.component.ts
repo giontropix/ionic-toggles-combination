@@ -28,7 +28,7 @@ export class ItemComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.isOn && changes.isOn.currentValue === false) {
+    if (changes.isOn && this.dataValue.name !== "Modalità aereo") {
       this.dataValue.isOn = this.isOn;
       this.inputField = '';
     }
