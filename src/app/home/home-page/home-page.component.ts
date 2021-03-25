@@ -17,11 +17,14 @@ export class HomePageComponent implements OnInit {
     { name: 'WiFi', isOn: false },
   ];
 
-  switchAll = (ev: Boolean) => (this.haveToSwitchBecauseFlyMode = ev);
+  switchAll = (ev: Boolean) => {
+    this.haveToSwitchBecauseFlyMode = ev;
+    this.switchOn = !this.switchOn
+  };
 
   updateChildren = (ev: { name: String; isOn: boolean }) => {
     this.items.find((item) => item.name === ev.name).isOn = ev.isOn;
-    this.areAllSwitched()
+    this.areAllSwitched();
   };
 
   areAllSwitched = () => {
