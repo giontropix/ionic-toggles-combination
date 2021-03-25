@@ -20,6 +20,7 @@ export class ItemComponent implements OnInit, OnChanges {
   @Input() dataValue: { name: String; isOn: Boolean };
   @Input() haveToSwitchBecauseFlyMode: Boolean;
   @Output() emit: EventEmitter<Boolean> = new EventEmitter();
+  @Output() emitItself: EventEmitter<any> = new EventEmitter(true);
 
   inputField: String;
   isFlyMode: Boolean = false;
@@ -28,11 +29,10 @@ export class ItemComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.isOn && this.dataValue.name !== "Modalità aereo") {
+    if (changes.isOn && this.dataValue.name !== 'Modalità aereo') {
       this.dataValue.isOn = this.isOn;
       this.inputField = '';
-    }
-    else if (
+    } else if (
       changes.haveToSwitchBecauseFlyMode &&
       this.dataValue.name !== 'Modalità aereo' &&
       changes.haveToSwitchBecauseFlyMode.currentValue === true
@@ -51,6 +51,12 @@ export class ItemComponent implements OnInit, OnChanges {
     if (this.dataValue.name === 'Modalità aereo') {
       this.isFlyMode = !this.isFlyMode;
       this.emit.emit(this.isFlyMode);
+    }
+  };
+
+  sendItselfToParent = () => {
+    if (this.dataValue.name !== 'Modalità aereo') {
+      this.emitItself.emit(this.dataValue);
     }
   };
 }

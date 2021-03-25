@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePageComponent implements OnInit {
   constructor() {}
+
   isOn: Boolean = false;
+  switchOn: Boolean = false;
   haveToSwitchBecauseFlyMode: Boolean = false;
   items = [
     { name: 'Modalità aereo', isOn: false },
@@ -16,6 +18,19 @@ export class HomePageComponent implements OnInit {
   ];
 
   switchAll = (ev: Boolean) => (this.haveToSwitchBecauseFlyMode = ev);
+
+  updateChildren = (ev: { name: String; isOn: boolean }) => {
+    this.items.find((item) => item.name === ev.name).isOn = ev.isOn;
+    this.areAllSwitched()
+  };
+
+  areAllSwitched = () => {
+    const filtered = this.items.filter(({ name }) => name !== 'Modalità aereo');
+    console.log(filtered);
+    if (filtered.every(({ isOn }) => isOn === true))
+      return (this.switchOn = true);
+    return (this.switchOn = false);
+  };
 
   ngOnInit() {}
 }
