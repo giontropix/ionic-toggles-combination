@@ -16,35 +16,21 @@ import {
 export class ItemComponent implements OnInit, OnChanges {
   constructor() {}
 
-  @Input() isOn: Boolean;
   @Input() dataValue: { name: String; isOn: Boolean };
-  @Input() haveToSwitchBecauseFlyMode: Boolean;
-  @Output() emit: EventEmitter<Boolean> = new EventEmitter();
+  @Input() disableBecauseFlyMode: Boolean;
+  @Output() emit: EventEmitter<boolean> = new EventEmitter(true);
   @Output() emitItself: EventEmitter<any> = new EventEmitter(true);
 
   inputField: String;
-  isFlyMode: Boolean = false;
+  isFlyMode = false;
   isOnBackUp: Boolean;
 
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.isOn && this.dataValue.name !== 'Modalità aereo') {
-      this.dataValue.isOn = this.isOn;
       this.inputField = '';
-    } else if (
-      changes.haveToSwitchBecauseFlyMode &&
-      this.dataValue.name !== 'Modalità aereo' &&
-      changes.haveToSwitchBecauseFlyMode.currentValue === true
-    ) {
-      this.isOnBackUp = this.dataValue.isOn;
-      this.dataValue.isOn = false;
-    } else if (
-      changes.haveToSwitchBecauseFlyMode &&
-      this.dataValue.name !== 'Modalità aereo' &&
-      changes.haveToSwitchBecauseFlyMode.currentValue === false
-    )
-      this.dataValue.isOn = this.isOnBackUp;
+    }
   }
 
   switchForFlyMode = () => {
@@ -54,7 +40,7 @@ export class ItemComponent implements OnInit, OnChanges {
     }
   };
 
-  sendItselfToParent = () => {
+  sendChildToParentToUpdateGeneralButton = () => {
     if (this.dataValue.name !== 'Modalità aereo') {
       this.emitItself.emit(this.dataValue);
     }

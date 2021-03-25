@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <ion-item lines="full">
-  <ion-toggle color="primary" [disabled]="this.haveToSwitchBecauseFlyMode==true" [(ngModel)]="this.switchOn" (click)="this.isOn = !this.isOn"></ion-toggle
+  <ion-toggle color="primary" [disabled]="this.disableBecauseFlyMode" [(ngModel)]="this.switchOn" (click)="this.switch()"></ion-toggle
   ><ion-label>Switch ALL</ion-label>
 </ion-item>
 
@@ -10,10 +10,9 @@
     <ion-row class="ion-align-items-center" *ngFor="let item of items">
       <ion-item>
         <app-item
-          [haveToSwitchBecauseFlyMode]="this.haveToSwitchBecauseFlyMode"
+          [disableBecauseFlyMode]="this.disableBecauseFlyMode"
           [dataValue]="item"
-          [isOn]="this.isOn"
-          (emit)="switchAll($event)"
+          (emit)="switchAllBecauseFlyMode($event)"
           (emitItself)="this.updateChildren($event)"
         ></app-item>
       </ion-item>

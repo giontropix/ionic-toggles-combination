@@ -8,18 +8,25 @@ import { Component, OnInit } from '@angular/core';
 export class HomePageComponent implements OnInit {
   constructor() {}
 
-  isOn: Boolean = false;
   switchOn: Boolean = false;
-  haveToSwitchBecauseFlyMode: Boolean = false;
+  disableBecauseFlyMode: boolean = false;
+  backup: boolean[];
   items = [
     { name: 'Modalità aereo', isOn: false },
     { name: 'Connessione dati', isOn: false },
     { name: 'WiFi', isOn: false },
   ];
 
-  switchAll = (ev: Boolean) => {
-    this.haveToSwitchBecauseFlyMode = ev;
-    this.switchOn = !this.switchOn
+  switch = () =>
+    this.items
+      .filter(({ name }) => name !== 'Modalità aereo')
+      .forEach((item) => (item.isOn = !this.switchOn));
+
+  switchAllBecauseFlyMode = (ev: boolean) => {
+    this.disableBecauseFlyMode = ev;
+    
+    if (ev) return this.setFlyMode();
+    else return this.unsetFlyMode();
   };
 
   updateChildren = (ev: { name: String; isOn: boolean }) => {
@@ -27,11 +34,29 @@ export class HomePageComponent implements OnInit {
     this.areAllSwitched();
   };
 
+  setFlyMode = () => {
+    this.backup = this.items
+      .filter(({ name }) => name !== 'Modalità aereo')
+      .map((item) => item.isOn);
+    this.items
+      .filter(({ name }) => name !== 'Modalità aereo')
+      .forEach((item) => (item.isOn = false));
+  };
+
+  unsetFlyMode = () => {
+    this.items
+      .filter(({ name }) => name !== 'Modalità aereo')
+      .forEach((item, i) => (item.isOn = this.backup[i]));
+  };
+
   areAllSwitched = () => {
-    const filtered = this.items.filter(({ name }) => name !== 'Modalità aereo');
-    console.log(filtered);
-    if (filtered.every(({ isOn }) => isOn === true))
+    if (
+      this.items
+        .filter(({ name }) => name !== 'Modalità aereo')
+        .every(({ isOn }) => isOn === true)
+    ) {
       return (this.switchOn = true);
+    }
     return (this.switchOn = false);
   };
 
